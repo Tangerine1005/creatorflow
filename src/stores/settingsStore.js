@@ -37,12 +37,11 @@ const useSettingsStore = create(
       setSupabaseConfig: (url, anonKey) =>
         set({ supabaseUrl: url, supabaseAnonKey: anonKey }),
 
-      // 개발 모드
-      devMode: true, // API 키 없을 때 자동으로 Mock 데이터 사용
+      // 개발 모드 (초기값은 .env 기준)
+      devMode: import.meta.env.VITE_DEV_MODE === 'true', 
       setDevMode: (mode) => set({ devMode: mode }),
       isDevMode: () => {
-        const state = get();
-        return state.devMode || !state.geminiApiKey;
+        return get().devMode;
       },
 
       // 기본값 설정
@@ -88,7 +87,6 @@ const useSettingsStore = create(
         naverClientSecret: state.naverClientSecret,
         supabaseUrl: state.supabaseUrl,
         supabaseAnonKey: state.supabaseAnonKey,
-        devMode: state.devMode,
         defaults: state.defaults,
         autoSaveInterval: state.autoSaveInterval,
         statsCacheInterval: state.statsCacheInterval,
