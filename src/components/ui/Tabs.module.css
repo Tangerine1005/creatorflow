@@ -1,0 +1,128 @@
+/* ============================================
+   Tabs 컴포넌트 스타일
+   - default: 하단 인디케이터
+   - pills: 둥근 배경 변형
+   - 모바일에서 가로 스크롤
+   ============================================ */
+
+/* 탭 래퍼 */
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* 탭 목록 */
+.tabList {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tabList::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Default 변형 ── */
+.default .tabList {
+  border-bottom: 1px solid var(--border);
+  gap: 0;
+}
+
+.default .tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--transition-fast) ease;
+}
+
+.default .tab:hover {
+  color: var(--text-primary);
+}
+
+.default .tab.active {
+  color: var(--accent-primary);
+}
+
+/* 슬라이딩 인디케이터 */
+.indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent-gradient);
+  border-radius: 2px 2px 0 0;
+  transition: left var(--transition-normal) cubic-bezier(0.34, 1.56, 0.64, 1),
+              width var(--transition-normal) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Pills 변형 ── */
+.pills .tabList {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  gap: 4px;
+}
+
+.pills .tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transition-fast) ease,
+              color var(--transition-fast) ease,
+              box-shadow var(--transition-fast) ease;
+}
+
+.pills .tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-card-hover);
+}
+
+.pills .tab.active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 탭 아이콘 */
+.tabIcon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 767px) {
+  .default .tab {
+    padding: 10px 14px;
+    font-size: 0.8125rem;
+  }
+
+  .pills .tab {
+    padding: 8px 12px;
+    font-size: 0.8125rem;
+  }
+}

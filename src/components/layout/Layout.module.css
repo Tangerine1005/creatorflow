@@ -1,0 +1,58 @@
+/* ============================================
+   Layout 스타일
+   Sidebar offset + 콘텐츠 패딩 + 스크롤
+   ============================================ */
+
+.layout {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+/* mainWrapper는 사이드바 너비만큼 왼쪽 마진 */
+.mainWrapper {
+  margin-left: var(--current-sidebar-width, var(--sidebar-width));
+  transition: margin-left var(--transition-normal);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header의 left도 동적으로 제어 */
+.mainWrapper :global(.header),
+.mainWrapper > header {
+  left: var(--current-sidebar-width, var(--sidebar-width));
+}
+
+/* ---- 메인 콘텐츠 ---- */
+.content {
+  flex: 1;
+  margin-top: var(--header-height);
+  padding: var(--space-6);
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ---- 반응형 ---- */
+@media (max-width: 767px) {
+  .mainWrapper {
+    margin-left: 0;
+  }
+
+  .content {
+    /* 하단 탭바 높이만큼 패딩 추가 */
+    padding-bottom: calc(var(--mobile-tabbar-height) + var(--space-4));
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .content {
+    padding: var(--space-4);
+  }
+}

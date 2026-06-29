@@ -1,0 +1,159 @@
+/* ============================================
+   Input.module.css
+   CreatorFlow 인풋 컴포넌트 스타일
+   - 포커스 시 accent border + glow
+   - 에러/헬퍼 텍스트
+   - 아이콘 지원
+   - 글자 수 카운터
+   ============================================ */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: 'Inter', 'Pretendard', sans-serif;
+}
+
+/* ── 라벨 ── */
+.label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+/* ── 인풋 컨테이너 (아이콘 배치용) ── */
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* ── 인풋 필드 ── */
+.input {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition:
+    border-color var(--transition-normal) ease,
+    box-shadow var(--transition-normal) ease,
+    background var(--transition-normal) ease;
+}
+
+.input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+/* 포커스 시 accent glow */
+.input:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  background: var(--bg-primary);
+}
+
+/* ── 아이콘 패딩 조정 ── */
+.hasLeftIcon {
+  padding-left: 40px;
+}
+
+.hasRightIcon {
+  padding-right: 40px;
+}
+
+/* ── 아이콘 위치 ── */
+.leftIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary);
+  pointer-events: none;
+  transition: color var(--transition-normal) ease;
+}
+
+.rightIcon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary);
+  pointer-events: none;
+  transition: color var(--transition-normal) ease;
+}
+
+/* 포커스 시 아이콘 색상 변경 */
+.input:focus ~ .leftIcon,
+.input:focus ~ .rightIcon {
+  color: var(--accent-primary);
+}
+
+/* ── 에러 상태 ── */
+.inputError {
+  border-color: var(--danger) !important;
+}
+
+.inputError:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+}
+
+/* ── 비활성 ── */
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--bg-secondary);
+}
+
+/* ── 하단 정보 행 (에러, 헬퍼, 카운터) ── */
+.bottomRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 18px;
+}
+
+.errorMessage {
+  font-size: 0.75rem;
+  color: var(--danger);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.helperText {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.counter {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.counterWarning {
+  color: var(--warning);
+}
+
+.counterDanger {
+  color: var(--danger);
+}
+
+/* ── 반응형 ── */
+@media (max-width: 767px) {
+  .input {
+    font-size: 1rem; /* 모바일에서 zoom 방지 */
+  }
+}

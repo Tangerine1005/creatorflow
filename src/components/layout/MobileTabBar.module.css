@@ -1,0 +1,80 @@
+/* ============================================
+   MobileTabBar 스타일
+   하단 고정, 글래스모피즘, 768px 미만에서만 표시
+   ============================================ */
+
+.tabBar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--mobile-tabbar-height);
+  background: var(--glass);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-top: 1px solid var(--glass-border);
+  z-index: var(--z-sticky);
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 var(--space-2);
+  /* safe area (iOS notch) */
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* 768px 미만에서만 표시 */
+@media (max-width: 767px) {
+  .tabBar {
+    display: flex;
+  }
+}
+
+/* ---- 개별 탭 ---- */
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  flex: 1;
+  padding: var(--space-1) 0;
+  color: var(--text-tertiary);
+  text-decoration: none;
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  transition: all var(--transition-fast);
+  border-radius: var(--radius-md);
+  position: relative;
+}
+
+.tab:hover {
+  color: var(--text-secondary);
+}
+
+.tab.active {
+  color: var(--accent-primary);
+}
+
+/* 활성 탭 상단 인디케이터 */
+.tab.active::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 25%;
+  right: 25%;
+  height: 2px;
+  background: var(--accent-primary);
+  border-radius: var(--radius-full);
+}
+
+.tabIcon {
+  transition: transform var(--transition-fast);
+}
+
+.tab.active .tabIcon {
+  transform: scale(1.1);
+}
+
+.tabLabel {
+  line-height: 1;
+}

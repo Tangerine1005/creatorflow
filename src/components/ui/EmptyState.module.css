@@ -1,0 +1,88 @@
+/* ============================================
+   EmptyState 컴포넌트 스타일
+   - 중앙 정렬 레이아웃
+   - fadeIn + slideUp 등장 애니메이션
+   ============================================ */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  animation: fadeInUp var(--transition-normal) ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 아이콘 컨테이너 */
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-xl);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  transition: background var(--transition-fast) ease;
+}
+
+/* 제목 */
+.title {
+  margin: 0 0 8px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+/* 설명 */
+.description {
+  margin: 0 0 24px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 360px;
+}
+
+/* 액션 버튼 영역 */
+.action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 767px) {
+  .wrapper {
+    padding: 32px 16px;
+  }
+
+  .iconContainer {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 16px;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .description {
+    font-size: 0.8125rem;
+    max-width: 280px;
+  }
+}

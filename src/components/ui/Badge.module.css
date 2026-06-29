@@ -1,0 +1,115 @@
+/* ============================================
+   Badge.module.css
+   CreatorFlow 뱃지 컴포넌트 스타일
+   - variant: default, success, warning, danger, info, accent
+   - size: sm, md
+   - dot 인디케이터 + pulse 애니메이션
+   ============================================ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', 'Pretendard', sans-serif;
+  font-weight: 600;
+  white-space: nowrap;
+  border-radius: 9999px; /* pill 형태 */
+  transition:
+    background var(--transition-normal) ease,
+    color var(--transition-normal) ease;
+}
+
+/* ── 사이즈 ── */
+.sm {
+  padding: 2px 8px;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+}
+
+.md {
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+/* ── Variant: default ── */
+.default {
+  background: var(--bg-card-hover);
+  color: var(--text-secondary);
+}
+
+/* ── Variant: success ── */
+.success {
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--success);
+}
+
+/* ── Variant: warning ── */
+.warning {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--warning);
+}
+
+/* ── Variant: danger ── */
+.danger {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--danger);
+}
+
+/* ── Variant: info ── */
+.info {
+  background: rgba(59, 130, 246, 0.12);
+  color: #3b82f6;
+}
+
+/* ── Variant: accent ── */
+.accent {
+  background: rgba(99, 102, 241, 0.12);
+  color: var(--accent-primary);
+}
+
+/* ── Dot 인디케이터 ── */
+.dot {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* ── Pulse 애니메이션 ── */
+.pulse .dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0;
+  animation: pulseRing 1.5s ease-out infinite;
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+/* dot만 있고 텍스트 없을 때 */
+.dotOnly {
+  padding: 4px;
+  border-radius: 50%;
+  width: auto;
+  height: auto;
+  line-height: 0;
+}
+
+.dotOnly .dot {
+  width: 8px;
+  height: 8px;
+}

@@ -1,0 +1,611 @@
+/* ============================================
+   Dashboard Page — CSS Module
+   글래스모피즘 + stagger 애니메이션 + 반응형 그리드
+   ============================================ */
+
+/* ── 페이지 전체 컨테이너 ── */
+.page {
+  padding: var(--space-6) var(--space-8);
+  max-width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+/* ── Stagger 등장 애니메이션 ── */
+@keyframes staggerFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger {
+  opacity: 0;
+  animation: staggerFadeInUp 0.5s ease forwards;
+}
+
+.stagger1 { animation-delay: 0.05s; }
+.stagger2 { animation-delay: 0.1s; }
+.stagger3 { animation-delay: 0.15s; }
+.stagger4 { animation-delay: 0.2s; }
+.stagger5 { animation-delay: 0.25s; }
+.stagger6 { animation-delay: 0.3s; }
+
+/* ============================================
+   상단 환영 메시지 + CTA
+   ============================================ */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.greetingArea {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.greeting {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.greetingEmoji {
+  font-size: var(--text-3xl);
+  display: inline-block;
+  animation: wave 2s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg); }
+  15% { transform: rotate(14deg); }
+  30% { transform: rotate(-8deg); }
+  40% { transform: rotate(14deg); }
+  50% { transform: rotate(-4deg); }
+  60% { transform: rotate(10deg); }
+  70% { transform: rotate(0deg); }
+}
+
+.subGreeting {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   콘텐츠 현황 카드 4개 그리드
+   ============================================ */
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.statCard {
+  background: var(--glass);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: transform var(--transition-normal),
+              box-shadow var(--transition-normal),
+              background var(--transition-fast);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.statCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.statCard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  background: var(--bg-card-hover);
+}
+
+.statCard:hover::before {
+  opacity: 1;
+}
+
+/* 각 카드별 상단 바 색상 */
+.statCardWarning::before  { background: var(--warning); }
+.statCardSuccess::before  { background: var(--success); }
+.statCardInfo::before     { background: var(--info); }
+.statCardAccent::before   { background: var(--accent-primary); }
+
+.statTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.statIconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform var(--transition-normal);
+}
+
+.statCard:hover .statIconWrap {
+  transform: scale(1.1);
+}
+
+.statIconWarning  { background: var(--warning-light); color: var(--warning); }
+.statIconSuccess  { background: var(--success-light); color: var(--success); }
+.statIconInfo     { background: var(--info-light);    color: var(--info); }
+.statIconAccent   { background: var(--accent-primary-light); color: var(--accent-primary); }
+
+.statNumber {
+  font-size: var(--text-3xl);
+  font-weight: var(--font-extrabold);
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  font-weight: var(--font-medium);
+}
+
+/* ============================================
+   성과 + 트렌드 (2컬럼)
+   ============================================ */
+
+.midSection {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--space-6);
+}
+
+/* ── 성과 차트 카드 ── */
+.performanceCard {
+  background: var(--glass);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.performanceHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.sectionTitle {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.channelStats {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.channelStat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  text-align: right;
+}
+
+.channelStatLabel {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: var(--font-medium);
+}
+
+.channelStatValue {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  justify-content: flex-end;
+}
+
+.channelStatChange {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--success);
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--success-light);
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+}
+
+.chartWrap {
+  width: 100%;
+  height: 220px;
+}
+
+/* Recharts 커스텀 툴팁 */
+.chartTooltip {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  box-shadow: var(--shadow-md);
+}
+
+.chartTooltipLabel {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-1);
+  font-weight: var(--font-medium);
+}
+
+.chartTooltipItem {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  font-weight: var(--font-semibold);
+}
+
+/* ── 트렌드 키워드 카드 ── */
+.trendCard {
+  background: var(--glass);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.trendItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  transition: background var(--transition-fast);
+  cursor: default;
+}
+
+.trendItem:hover {
+  background: var(--bg-card-hover);
+}
+
+.trendRank {
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  color: var(--text-tertiary);
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.trendBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.trendKeyword {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trendBarWrap {
+  width: 100%;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--border);
+  overflow: hidden;
+}
+
+.trendBar {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--accent-gradient);
+  transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.trendMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.trendChange {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--success);
+}
+
+.trendIcon {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity var(--transition-fast),
+              transform var(--transition-fast);
+  color: var(--accent-primary);
+}
+
+.trendItem:hover .trendIcon {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ============================================
+   최근 콘텐츠 + 활동 로그 (2컬럼)
+   ============================================ */
+
+.bottomSection {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: var(--space-6);
+}
+
+/* ── 최근 콘텐츠 카드 ── */
+.recentCard {
+  background: var(--glass);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.viewAllLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--accent-primary);
+  font-weight: var(--font-medium);
+  transition: gap var(--transition-fast);
+  text-decoration: none;
+}
+
+.viewAllLink:hover {
+  gap: var(--space-2);
+}
+
+.contentList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.contentItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  transition: background var(--transition-fast);
+  cursor: default;
+}
+
+.contentItem:hover {
+  background: var(--bg-card-hover);
+}
+
+.contentInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.contentTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contentMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.contentDate {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+/* ── 활동 로그 카드 ── */
+.activityCard {
+  background: var(--glass);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.activityItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  transition: background var(--transition-fast);
+}
+
+.activityItem:hover {
+  background: var(--bg-card-hover);
+}
+
+.activityAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--accent-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: white;
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+}
+
+.activityBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.activityText {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.activityName {
+  font-weight: var(--font-semibold);
+}
+
+.activityAction {
+  font-weight: var(--font-medium);
+  color: var(--accent-primary);
+}
+
+.activityTime {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+/* ============================================
+   반응형
+   ============================================ */
+
+/* 태블릿 */
+@media (max-width: 1024px) {
+  .page {
+    padding: var(--space-4) var(--space-5);
+    gap: var(--space-6);
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .midSection,
+  .bottomSection {
+    grid-template-columns: 1fr;
+  }
+
+  .greeting {
+    font-size: var(--text-2xl);
+  }
+}
+
+/* 모바일 */
+@media (max-width: 767px) {
+  .page {
+    padding: var(--space-4);
+    gap: var(--space-5);
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .channelStats {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .channelStat {
+    text-align: left;
+  }
+
+  .channelStatValue {
+    justify-content: flex-start;
+  }
+
+  .greeting {
+    font-size: var(--text-xl);
+  }
+
+  .performanceHeader {
+    flex-direction: column;
+  }
+
+  .chartWrap {
+    height: 180px;
+  }
+}

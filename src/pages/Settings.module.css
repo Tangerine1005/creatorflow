@@ -1,0 +1,518 @@
+/* Settings Page Styles */
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+}
+
+.layout {
+  display: flex;
+  gap: var(--space-6);
+  min-height: 500px;
+}
+
+/* Side Nav */
+.sideNav {
+  width: 220px;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  transition: all var(--transition-fast);
+  text-align: left;
+  width: 100%;
+}
+
+.navItem:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+}
+
+.navItem.active {
+  background: var(--accent-primary-light);
+  color: var(--accent-primary);
+}
+
+.navArrow {
+  margin-left: auto;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.navItem:hover .navArrow,
+.navItem.active .navArrow {
+  opacity: 1;
+}
+
+/* Content */
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+}
+
+.sectionDesc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-top: calc(-1 * var(--space-4));
+}
+
+/* ─── Profile Card ─── */
+.profileCard {
+  padding: var(--space-6) !important;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.profileCard > div:first-child {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.profileAvatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-bold);
+  font-size: var(--text-2xl);
+  flex-shrink: 0;
+}
+
+.profileFields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.profileField {
+  max-width: 400px;
+}
+
+/* API Cards */
+.apiCards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.apiCard {
+  padding: var(--space-5);
+}
+
+.apiHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.apiInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.apiHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.apiName {
+  font-weight: var(--font-semibold);
+  font-size: var(--text-base);
+}
+
+.apiLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--accent-primary);
+  transition: color var(--transition-fast);
+}
+
+.apiLink:hover {
+  color: var(--accent-primary-hover);
+}
+
+.apiInputWrapper {
+  max-width: 500px;
+}
+
+.eyeBtn {
+  display: flex;
+  align-items: center;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 0;
+  transition: color var(--transition-fast);
+}
+
+.eyeBtn:hover {
+  color: var(--text-primary);
+}
+
+.saveRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--warning);
+}
+
+/* Theme Cards */
+.optionGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.optionLabel {
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.themeCards {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.themeCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  width: 120px;
+}
+
+.themeCard:hover {
+  border-color: var(--border-hover);
+}
+
+.themeCard.selected {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.themePreviewDark,
+.themePreviewLight {
+  width: 80px;
+  height: 50px;
+  border-radius: var(--radius-sm);
+}
+
+.themePreviewDark {
+  background: linear-gradient(135deg, #0f1729, #1a2332);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.themePreviewLight {
+  background: linear-gradient(135deg, #f8fafc, #ffffff);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Language Buttons */
+.langBtns {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.langBtn {
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.langBtn:hover {
+  border-color: var(--border-hover);
+}
+
+.langBtn.selected {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: var(--accent-primary-light);
+}
+
+/* Toggle Rows */
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.toggleRow:last-child {
+  border-bottom: none;
+}
+
+.toggleLabel {
+  display: block;
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.toggleDesc {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  transition: var(--transition-normal);
+}
+
+.slider::before {
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: var(--transition-normal);
+}
+
+.switch input:checked + .slider {
+  background: var(--accent-primary);
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(22px);
+}
+
+/* Filter Select (reused) */
+.filterSelect {
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+/* Dev Card */
+.devCard {
+  padding: var(--space-5);
+}
+
+.devNotice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--info-light);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--info);
+}
+
+/* ─── Export Section ─── */
+.exportCard {
+  padding: var(--space-6) !important;
+}
+
+.exportInfo {
+  display: flex;
+  gap: var(--space-8);
+}
+
+.exportStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.exportStatValue {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.exportStatLabel {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.exportButtons {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.exportHint {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  .sideNav {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: var(--space-2);
+    padding-bottom: var(--space-2);
+  }
+
+  .navItem {
+    white-space: nowrap;
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .navArrow {
+    display: none;
+  }
+
+  .themeCards {
+    flex-direction: column;
+  }
+
+  .themeCard {
+    width: 100%;
+    flex-direction: row;
+  }
+
+  .saveRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profileCard {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profileCard > div:first-child {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profileField {
+    max-width: 100%;
+  }
+
+  .apiHeaderActions {
+    flex-wrap: wrap;
+  }
+
+  .exportInfo {
+    gap: var(--space-4);
+  }
+
+  .exportButtons {
+    flex-direction: column;
+  }
+}

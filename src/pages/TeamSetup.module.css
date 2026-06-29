@@ -1,0 +1,301 @@
+/* ============================================
+   TeamSetup 페이지 스타일
+   글래스모피즘 카드 + 탭 전환 UI
+   ============================================ */
+
+/* 전체 화면 래퍼 */
+.page {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0c29, #1a1040, #0f1729);
+  overflow: hidden;
+  padding: var(--space-4);
+}
+
+/* 배경 데코 */
+.bgOrbs {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+}
+
+.orb1 {
+  width: 350px;
+  height: 350px;
+  background: linear-gradient(135deg, #06b6d4, #0891b2);
+  top: -8%;
+  right: -5%;
+  animation: floatOrb1 9s ease-in-out infinite;
+}
+
+.orb2 {
+  width: 280px;
+  height: 280px;
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+  bottom: -8%;
+  left: -5%;
+  animation: floatOrb2 11s ease-in-out infinite;
+}
+
+@keyframes floatOrb1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-25px, 20px) scale(1.06); }
+}
+
+@keyframes floatOrb2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, -20px) scale(1.08); }
+}
+
+/* ============================================
+   글래스모피즘 카드
+   ============================================ */
+
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  padding: var(--space-10);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  animation: cardScaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes cardScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ============================================
+   헤더 (로고 + 제목)
+   ============================================ */
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+}
+
+.headerIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--accent-gradient);
+  color: white;
+  margin-bottom: var(--space-4);
+}
+
+.headerTitle {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.headerSubtitle {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   탭 전환 버튼
+   ============================================ */
+
+.tabs {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-1);
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-6);
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.tab:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.tabActive {
+  color: white;
+  background: var(--accent-gradient);
+  box-shadow: var(--shadow-sm);
+}
+
+.tabActive:hover {
+  color: white;
+  background: var(--accent-gradient);
+}
+
+/* ============================================
+   탭 콘텐츠
+   ============================================ */
+
+.tabContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  animation: fadeInContent 0.3s ease forwards;
+}
+
+@keyframes fadeInContent {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   초대 코드 표시 영역
+   ============================================ */
+
+.inviteSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  animation: fadeInContent 0.3s ease forwards;
+}
+
+.inviteLabel {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.inviteCodeBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px dashed rgba(139, 92, 246, 0.3);
+  border-radius: var(--radius-md);
+}
+
+.inviteCode {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  letter-spacing: 0.15em;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.copyBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.copyBtn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--text-primary);
+}
+
+.copied {
+  color: var(--success);
+  border-color: var(--success);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+/* 성공 메시지 */
+.successMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: var(--radius-md);
+  color: var(--success);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  animation: fadeInContent 0.3s ease forwards;
+}
+
+/* 구분선 */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin: var(--space-2) 0;
+}
+
+/* ============================================
+   반응형
+   ============================================ */
+
+@media (max-width: 480px) {
+  .card {
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+  }
+
+  .headerTitle {
+    font-size: var(--text-xl);
+  }
+
+  .inviteCode {
+    font-size: var(--text-xl);
+  }
+
+  .tab {
+    font-size: var(--text-xs);
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .orb1 { width: 220px; height: 220px; }
+  .orb2 { width: 180px; height: 180px; }
+}

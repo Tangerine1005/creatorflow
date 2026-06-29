@@ -1,0 +1,451 @@
+/* Team Page Styles */
+
+.team {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+}
+
+/* ─── Team Info Card ─── */
+.teamInfoCard {
+  padding: var(--space-6) !important;
+  background: var(--bg-card) !important;
+}
+
+.teamInfoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+.teamInfoItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.teamInfoIcon {
+  color: var(--accent-primary);
+  flex-shrink: 0;
+}
+
+.teamInfoLabel {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.teamInfoValue {
+  display: block;
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+/* ─── Invite Card ─── */
+.inviteCard {
+  padding: var(--space-6) !important;
+  background: var(--accent-primary-light) !important;
+  border-color: var(--accent-primary) !important;
+}
+
+.inviteHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.inviteTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  margin-bottom: var(--space-1);
+}
+
+.inviteDesc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.inviteRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+.inviteCode {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.codeText {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.15em;
+}
+
+.inviteMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.inviteExpiry {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+/* ─── Member List ─── */
+.listTitle {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-3);
+}
+
+.memberRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  margin-bottom: var(--space-3);
+  transition: all var(--transition-fast);
+}
+
+.memberRow:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-card);
+}
+
+.memberAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-bold);
+  font-size: var(--text-lg);
+  flex-shrink: 0;
+}
+
+.memberInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.memberName {
+  display: block;
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.memberEmail {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+}
+
+.memberActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.roleSelect {
+  padding: var(--space-1) var(--space-2);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.roleSelect:hover {
+  border-color: var(--accent-primary);
+}
+
+.removeBtn {
+  padding: var(--space-2);
+  color: var(--text-tertiary);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.removeBtn:hover {
+  color: var(--danger);
+  background: var(--danger-light);
+}
+
+/* ─── Activity Log Card ─── */
+.activityCard {
+  padding: var(--space-6) !important;
+}
+
+.activityTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  margin-bottom: var(--space-5);
+}
+
+.activityTimeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.activityItem {
+  position: relative;
+  display: flex;
+  gap: var(--space-4);
+  padding-bottom: var(--space-5);
+  padding-left: var(--space-6);
+}
+
+.activityItem:last-child {
+  padding-bottom: 0;
+}
+
+.timelineDot {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  border: 2px solid var(--bg-card);
+  box-shadow: 0 0 0 2px var(--accent-primary-light);
+  z-index: 1;
+}
+
+.timelineLine {
+  position: absolute;
+  left: 5px;
+  top: 18px;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+
+.activityContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.activityTop {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.activityEmoji {
+  font-size: var(--text-base);
+}
+
+.activityUser {
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+}
+
+.activityAction {
+  font-size: var(--text-sm);
+  color: var(--accent-primary);
+  font-weight: var(--font-medium);
+}
+
+.activityDetails {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-1);
+}
+
+.activityTime {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.showMoreBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  width: 100%;
+  padding: var(--space-3);
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--accent-primary);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.showMoreBtn:hover {
+  background: var(--accent-primary-light);
+  border-color: var(--accent-primary);
+}
+
+/* ─── Roles Card ─── */
+.rolesCard {
+  padding: var(--space-6) !important;
+}
+
+.rolesTitle {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  margin-bottom: var(--space-4);
+}
+
+.rolesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+.roleItem {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+
+.roleItem strong {
+  display: block;
+  margin-bottom: var(--space-1);
+  color: var(--text-primary);
+}
+
+.roleItem p {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.roleIconAdmin { color: var(--accent-primary); }
+.roleIconEditor { color: var(--success); }
+.roleIconViewer { color: var(--text-tertiary); }
+
+/* ─── Delete Modal ─── */
+.modalFooter {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+}
+
+.deleteModalBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+}
+
+.deleteAvatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--danger-light);
+  color: var(--danger);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-bold);
+  font-size: var(--text-2xl);
+}
+
+.deleteText {
+  font-size: var(--text-base);
+  color: var(--text-primary);
+}
+
+.deleteWarning {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  padding: var(--space-3) var(--space-4);
+  background: var(--danger-light);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 767px) {
+  .inviteHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .inviteRight {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .inviteMeta {
+    flex-wrap: wrap;
+  }
+
+  .memberRow {
+    flex-wrap: wrap;
+  }
+
+  .memberActions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .rolesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .teamInfoGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+}

@@ -1,0 +1,190 @@
+/* ============================================
+   Button.module.css
+   CreatorFlow 버튼 컴포넌트 스타일
+   - variant: primary, secondary, ghost, danger
+   - size: sm, md, lg
+   - 호버 시 lift + glow 마이크로 애니메이션
+   ============================================ */
+
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Inter', 'Pretendard', sans-serif;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  transition:
+    transform var(--transition-fast) ease,
+    box-shadow var(--transition-normal) ease,
+    background var(--transition-normal) ease,
+    border-color var(--transition-normal) ease,
+    opacity var(--transition-fast) ease;
+}
+
+/* ── 사이즈 ── */
+.sm {
+  padding: 6px 14px;
+  font-size: 0.8125rem;
+  border-radius: var(--radius-sm);
+  min-height: 32px;
+}
+
+.md {
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  border-radius: var(--radius-md);
+  min-height: 40px;
+}
+
+.lg {
+  padding: 14px 28px;
+  font-size: 1rem;
+  border-radius: var(--radius-md);
+  min-height: 48px;
+}
+
+/* ── Primary (그라디언트) ── */
+.primary {
+  background: var(--accent-gradient);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
+}
+
+.primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.primary:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25);
+}
+
+/* ── Secondary (아웃라인) ── */
+.secondary {
+  background: transparent;
+  color: var(--accent-primary);
+  border: 1.5px solid var(--accent-primary);
+}
+
+.secondary:hover:not(:disabled) {
+  background: rgba(99, 102, 241, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.15);
+}
+
+.secondary:active:not(:disabled) {
+  transform: translateY(0);
+  background: rgba(99, 102, 241, 0.12);
+}
+
+/* ── Ghost ── */
+.ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.ghost:hover:not(:disabled) {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.ghost:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* ── Danger ── */
+.danger {
+  background: var(--danger);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
+}
+
+.danger:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+  filter: brightness(1.1);
+}
+
+.danger:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
+}
+
+/* ── 상태 ── */
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+/* 로딩 중 텍스트 숨김 */
+.loadingContent {
+  visibility: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── 아이콘 ── */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.iconLeft {
+  composes: icon;
+}
+
+.iconRight {
+  composes: icon;
+}
+
+/* ── 스피너 ── */
+.spinnerWrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── 반응형 ── */
+@media (max-width: 767px) {
+  .lg {
+    padding: 12px 24px;
+    font-size: 0.9375rem;
+  }
+}

@@ -1,0 +1,537 @@
+/* ============================================
+   Header 스타일
+   글래스모피즘 배경, 검색바, 드롭다운, 반응형
+   ============================================ */
+
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: var(--current-sidebar-width, var(--sidebar-width));
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 0 var(--space-6);
+  background: var(--glass);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-bottom: 1px solid var(--glass-border);
+  z-index: var(--z-sticky);
+  transition: left var(--transition-normal);
+}
+
+/* ---- 왼쪽: 페이지 제목 ---- */
+.left {
+  flex-shrink: 0;
+}
+
+.pageTitle {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* ---- 가운데: 검색바 ---- */
+.center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 400px;
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+}
+
+.searchBar:focus-within {
+  background: var(--bg-input-focus);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-primary-light);
+}
+
+.searchIcon {
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.searchInput {
+  flex: 1;
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: var(--text-tertiary);
+}
+
+.shortcutHint {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  color: var(--text-tertiary);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ---- 오른쪽: 아이콘 버튼들 ---- */
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.iconBtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.iconBtn:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+  transform: scale(1.05);
+}
+
+.iconBtn:active {
+  transform: scale(0.95);
+}
+
+/* 알림 뱃지 (빨간 점) */
+.badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  background: var(--danger);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--bg-primary);
+}
+
+.badgePulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ---- 프로필 아바타 ---- */
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--accent-gradient);
+  color: white;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 2px solid transparent;
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-glow);
+}
+
+.avatarText {
+  line-height: 1;
+}
+
+/* ---- 모바일 햄버거 메뉴 버튼 ---- */
+.menuBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.menuBtn:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+}
+
+/* ============================================
+   공통 드롭다운
+   ============================================ */
+
+.dropdownWrapper {
+  position: relative;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + var(--space-2));
+  min-width: 320px;
+  background: var(--glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-dropdown);
+  animation: dropdownFadeIn 0.2s ease forwards;
+  overflow: hidden;
+}
+
+.dropdownHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.dropdownTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.dropdownDivider {
+  height: 1px;
+  background: var(--border);
+  margin: 0;
+}
+
+/* ============================================
+   알림 패널
+   ============================================ */
+
+.notifPanel {
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.markReadBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--accent-primary);
+  cursor: pointer;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.markReadBtn:hover {
+  background: var(--accent-primary-light);
+}
+
+.notifList {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.notifItem {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  transition: background var(--transition-fast);
+  cursor: default;
+}
+
+.notifItem:hover {
+  background: var(--bg-card-hover);
+}
+
+.notifRead {
+  opacity: 0.55;
+}
+
+.notifIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.notifIcon_warning {
+  background: var(--warning-light);
+  color: var(--warning);
+}
+
+.notifIcon_info {
+  background: var(--info-light);
+  color: var(--info);
+}
+
+.notifIcon_accent {
+  background: var(--accent-primary-light);
+  color: var(--accent-primary);
+}
+
+.notifContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.notifTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.notifMessage {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.notifTime {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+/* ============================================
+   프로필 드롭다운
+   ============================================ */
+
+.profilePanel {
+  min-width: 260px;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.profileAvatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--accent-gradient);
+  color: white;
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  flex-shrink: 0;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.profileName {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.profileEmail {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profileBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--accent-primary);
+  background: var(--accent-primary-light);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.profileMenu {
+  padding: var(--space-2) 0;
+}
+
+.profileMenuItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+}
+
+.profileMenuItem:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+}
+
+.logoutBtn {
+  color: var(--danger);
+  padding: var(--space-3) var(--space-4);
+}
+
+.logoutBtn:hover {
+  background: var(--danger-light);
+  color: var(--danger);
+}
+
+/* ============================================
+   검색 결과 드롭다운
+   ============================================ */
+
+.center > .dropdown {
+  left: 0;
+  right: 0;
+  top: calc(100% + var(--space-2));
+  min-width: unset;
+}
+
+.searchResults {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.searchResultItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  text-align: left;
+}
+
+.searchResultItem:hover {
+  background: var(--bg-card-hover);
+}
+
+.searchResultIcon {
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.searchResultText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.searchResultTitle {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.searchResultMeta {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+/* 빈 상태 */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-8) var(--space-4);
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+}
+
+/* ---- 반응형 ---- */
+
+/* 사이드바 collapsed 상태에서의 헤더 위치는 Layout에서 인라인으로 제어 */
+
+@media (max-width: 767px) {
+  .header {
+    left: 0;
+  }
+
+  .menuBtn {
+    display: flex;
+  }
+
+  .center {
+    display: none;
+  }
+
+  .shortcutHint {
+    display: none;
+  }
+
+  .pageTitle {
+    font-size: var(--text-base);
+  }
+
+  .dropdown {
+    position: fixed;
+    left: var(--space-4);
+    right: var(--space-4);
+    top: calc(var(--header-height) + var(--space-2));
+    min-width: unset;
+  }
+}

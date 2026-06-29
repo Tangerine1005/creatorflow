@@ -1,0 +1,242 @@
+// CreatorFlow — i18n 초기화
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+
+const resources = {
+  ko: {
+    translation: {
+      // 네비게이션
+      'nav.dashboard': '대시보드',
+      'nav.create': '콘텐츠 생성',
+      'nav.library': '라이브러리',
+      'nav.templates': '템플릿',
+      'nav.calendar': '캘린더',
+      'nav.analytics': '분석',
+      'nav.trends': '트렌드',
+      'nav.team': '팀 관리',
+      'nav.settings': '설정',
+
+      // 공통
+      'common.save': '저장',
+      'common.cancel': '취소',
+      'common.delete': '삭제',
+      'common.edit': '편집',
+      'common.create': '생성',
+      'common.search': '검색',
+      'common.filter': '필터',
+      'common.sort': '정렬',
+      'common.export': '내보내기',
+      'common.import': '가져오기',
+      'common.confirm': '확인',
+      'common.back': '뒤로',
+      'common.next': '다음',
+      'common.previous': '이전',
+      'common.close': '닫기',
+      'common.loading': '로딩 중...',
+      'common.noData': '데이터가 없습니다',
+      'common.error': '오류가 발생했습니다',
+      'common.retry': '다시 시도',
+      'common.autoSaved': '자동 저장됨',
+      'common.lastSaved': '마지막 저장',
+      'common.devMode': '개발 모드',
+
+      // 상태
+      'status.draft': '초안',
+      'status.completed': '완성',
+      'status.scheduled': '예약됨',
+      'status.published': '발행됨',
+
+      // 카테고리
+      'category.work': '직장공감',
+      'category.daily': '일상공감',
+      'category.trending': '시사/트렌드',
+
+      // 톤
+      'tone.funny': '재미있게 😂',
+      'tone.empathy': '공감되게 🥺',
+      'tone.direct': '직설적으로 💪',
+      'tone.powerful': '팔력있게 🔥',
+
+      // 대시보드
+      'dashboard.title': '대시보드',
+      'dashboard.contentStatus': '콘텐츠 현황',
+      'dashboard.channelSnapshot': '채널 성과',
+      'dashboard.trendingKeywords': '오늘의 트렌드',
+      'dashboard.recentContents': '최근 콘텐츠',
+      'dashboard.teamActivity': '팀 활동',
+
+      // Creator Studio
+      'creator.title': '콘텐츠 생성',
+      'creator.step1': '주제 설정',
+      'creator.step2': '스크립트',
+      'creator.step3': '메타데이터',
+      'creator.step4': '썸네일',
+      'creator.topic': '주제를 입력하세요',
+      'creator.tone': '톤 선택',
+      'creator.category': '카테고리',
+      'creator.language': '언어',
+      'creator.generate': 'AI 생성',
+      'creator.regenerate': '재생성',
+      'creator.preview': '미리보기',
+      'creator.narration': '나레이션',
+      'creator.subtitle': '자막',
+      'creator.direction': '장면 디렉션',
+      'creator.charCount': '글자',
+      'creator.estimatedTime': '예상 재생시간',
+
+      // 크레딧
+      'credits.imageTitle': '이미지 생성 크레딧',
+      'credits.used': '사용',
+      'credits.remaining': '잔여',
+      'credits.resetAt': '리셋',
+      'credits.exhausted': '한도 도달! 내일 00:00에 리셋됩니다.',
+      'credits.warning': '크레딧이 얼마 남지 않았습니다.',
+      'credits.generated': '이미지 {{count}}장 생성 (잔여 {{remaining}}/{{limit}}장)',
+
+      // YouTube 할당량
+      'quota.title': 'YouTube API 할당량',
+      'quota.lastSync': '마지막 동기화',
+      'quota.nextSync': '다음 동기화',
+      'quota.syncNow': '지금 동기화',
+      'quota.exhausted': '할당량 소진. 내일 자정에 리셋됩니다.',
+
+      // 설정
+      'settings.title': '설정',
+      'settings.apiKeys': 'API 키 관리',
+      'settings.theme': '테마',
+      'settings.language': '언어',
+      'settings.notifications': '알림',
+      'settings.devMode': '개발 모드',
+      'settings.onboarding': '가이드 투어 다시 보기',
+      'settings.data': '데이터 관리',
+      'settings.account': '계정',
+
+      // 에러 메시지
+      'error.networkError': '네트워크 연결을 확인해주세요.',
+      'error.apiKeyInvalid': 'API 키가 유효하지 않습니다.',
+      'error.apiKeyExpired': 'API 키가 만료되었습니다.',
+      'error.quotaExceeded': 'API 할당량이 초과되었습니다.',
+      'error.contentBlocked': '콘텐츠 안전 필터에 의해 차단되었습니다. 주제를 조금 수정해보세요.',
+      'error.timeout': '요청 시간이 초과되었습니다. 다시 시도해주세요.',
+      'error.uploadFailed': '업로드에 실패했습니다.',
+    },
+  },
+  en: {
+    translation: {
+      'nav.dashboard': 'Dashboard',
+      'nav.create': 'Creator Studio',
+      'nav.library': 'Library',
+      'nav.templates': 'Templates',
+      'nav.calendar': 'Calendar',
+      'nav.analytics': 'Analytics',
+      'nav.trends': 'Trends',
+      'nav.team': 'Team',
+      'nav.settings': 'Settings',
+
+      'common.save': 'Save',
+      'common.cancel': 'Cancel',
+      'common.delete': 'Delete',
+      'common.edit': 'Edit',
+      'common.create': 'Create',
+      'common.search': 'Search',
+      'common.filter': 'Filter',
+      'common.sort': 'Sort',
+      'common.export': 'Export',
+      'common.import': 'Import',
+      'common.confirm': 'Confirm',
+      'common.back': 'Back',
+      'common.next': 'Next',
+      'common.previous': 'Previous',
+      'common.close': 'Close',
+      'common.loading': 'Loading...',
+      'common.noData': 'No data available',
+      'common.error': 'An error occurred',
+      'common.retry': 'Retry',
+      'common.autoSaved': 'Auto-saved',
+      'common.lastSaved': 'Last saved',
+      'common.devMode': 'Dev Mode',
+
+      'status.draft': 'Draft',
+      'status.completed': 'Completed',
+      'status.scheduled': 'Scheduled',
+      'status.published': 'Published',
+
+      'category.work': 'Work Life',
+      'category.daily': 'Daily Life',
+      'category.trending': 'Trending',
+
+      'tone.funny': 'Funny 😂',
+      'tone.empathy': 'Empathetic 🥺',
+      'tone.direct': 'Direct 💪',
+      'tone.powerful': 'Powerful 🔥',
+
+      'dashboard.title': 'Dashboard',
+      'dashboard.contentStatus': 'Content Status',
+      'dashboard.channelSnapshot': 'Channel Performance',
+      'dashboard.trendingKeywords': "Today's Trends",
+      'dashboard.recentContents': 'Recent Contents',
+      'dashboard.teamActivity': 'Team Activity',
+
+      'creator.title': 'Creator Studio',
+      'creator.step1': 'Topic',
+      'creator.step2': 'Script',
+      'creator.step3': 'Metadata',
+      'creator.step4': 'Thumbnail',
+      'creator.topic': 'Enter your topic',
+      'creator.tone': 'Select tone',
+      'creator.category': 'Category',
+      'creator.language': 'Language',
+      'creator.generate': 'Generate with AI',
+      'creator.regenerate': 'Regenerate',
+      'creator.preview': 'Preview',
+      'creator.narration': 'Narration',
+      'creator.subtitle': 'Subtitle',
+      'creator.direction': 'Direction',
+      'creator.charCount': 'chars',
+      'creator.estimatedTime': 'Est. duration',
+
+      'credits.imageTitle': 'Image Credits',
+      'credits.used': 'Used',
+      'credits.remaining': 'Remaining',
+      'credits.resetAt': 'Reset at',
+      'credits.exhausted': 'Limit reached! Resets tomorrow at 00:00.',
+      'credits.warning': 'Credits running low.',
+      'credits.generated': '{{count}} images generated ({{remaining}}/{{limit}} remaining)',
+
+      'quota.title': 'YouTube API Quota',
+      'quota.lastSync': 'Last sync',
+      'quota.nextSync': 'Next sync',
+      'quota.syncNow': 'Sync now',
+      'quota.exhausted': 'Quota exhausted. Resets at midnight.',
+
+      'settings.title': 'Settings',
+      'settings.apiKeys': 'API Keys',
+      'settings.theme': 'Theme',
+      'settings.language': 'Language',
+      'settings.notifications': 'Notifications',
+      'settings.devMode': 'Developer Mode',
+      'settings.onboarding': 'Replay Guide Tour',
+      'settings.data': 'Data Management',
+      'settings.account': 'Account',
+
+      'error.networkError': 'Please check your network connection.',
+      'error.apiKeyInvalid': 'Invalid API key.',
+      'error.apiKeyExpired': 'API key has expired.',
+      'error.quotaExceeded': 'API quota exceeded.',
+      'error.contentBlocked': 'Content blocked by safety filter. Try modifying the topic.',
+      'error.timeout': 'Request timed out. Please try again.',
+      'error.uploadFailed': 'Upload failed.',
+    },
+  },
+};
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: 'ko',
+  fallbackLng: 'ko',
+  interpolation: {
+    escapeValue: false,
+  },
+});
+
+export default i18n;

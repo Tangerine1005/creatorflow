@@ -1,0 +1,441 @@
+/* Trends Page Styles — 전면 개편 */
+
+.trends {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+}
+
+.sourceContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.selectionInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--accent-primary);
+  font-weight: var(--font-medium);
+  padding: var(--space-2) var(--space-4);
+  background: var(--accent-primary-light);
+  border-radius: var(--radius-md);
+  width: fit-content;
+}
+
+/* ── Keyword Grid (Google / YouTube 공통) ── */
+.keywordGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
+.keywordCard {
+  padding: var(--space-5) !important;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.keywordSelected {
+  border-color: var(--accent-primary) !important;
+  box-shadow: 0 0 0 1px var(--accent-primary);
+}
+
+.keywordHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.keywordLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.keywordRank {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.keyword {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+}
+
+.scoreBar {
+  height: 6px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.scoreFill {
+  height: 100%;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-full);
+  transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.scoreLabel {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.categoryTag {
+  width: fit-content;
+}
+
+/* ── Checkbox ── */
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+  color: transparent;
+  padding: 0;
+}
+
+.checkbox:hover {
+  border-color: var(--accent-primary);
+}
+
+.checkbox.checked {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: white;
+}
+
+/* ── Hover Action ── */
+.hoverAction {
+  position: absolute;
+  bottom: var(--space-3);
+  right: var(--space-3);
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Google: Related Queries ── */
+.relatedQueries {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border);
+}
+
+.relatedTitle {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: var(--font-semibold);
+}
+
+.relatedQuery {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ── YouTube: Stats ── */
+.youtubeStats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.viewsCount {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ── Chart sections ── */
+.chartSection,
+.tableSection,
+.heatmapSection,
+.comparisonCard {
+  padding: var(--space-6) !important;
+}
+
+.chartSectionTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  margin-bottom: var(--space-4);
+}
+
+.pieWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* ── Naver Table ── */
+.naverTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.naverTable th {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--border);
+}
+
+.naverTable td {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.naverTable tbody tr {
+  transition: background var(--transition-fast);
+}
+
+.naverTable tbody tr:hover {
+  background: var(--bg-card-hover);
+}
+
+.rowSelected {
+  background: var(--accent-primary-light) !important;
+}
+
+.rankCell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.rankNum {
+  font-weight: var(--font-bold);
+  color: var(--accent-primary);
+}
+
+.keywordCell {
+  font-weight: var(--font-medium);
+}
+
+.scoreCell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.miniBar {
+  width: 60px;
+  height: 4px;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.miniFill {
+  height: 100%;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-full);
+}
+
+.changePositive {
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-weight: var(--font-medium);
+}
+
+/* ── Heatmap ── */
+.heatmapGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.heatmapRow {
+  display: grid;
+  grid-template-columns: 120px repeat(5, 1fr);
+  gap: 2px;
+}
+
+.heatmapCorner {
+  /* 빈 코너 */
+}
+
+.heatmapHeader {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  color: var(--text-tertiary);
+  text-align: center;
+  padding: var(--space-2);
+}
+
+.heatmapLabel {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  padding-right: var(--space-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.heatmapCell {
+  padding: var(--space-2);
+  text-align: center;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  transition: transform var(--transition-fast);
+}
+
+.heatmapCell:hover {
+  transform: scale(1.05);
+}
+
+/* ── Chart Tooltip ── */
+.chartTooltip {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  box-shadow: var(--shadow-md);
+}
+
+.chartTooltipLabel {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-1);
+}
+
+.chartTooltipValue {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+}
+
+/* ── Combo Card ── */
+.comboCard {
+  padding: var(--space-6) !important;
+}
+
+.comboTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  margin-bottom: var(--space-4);
+}
+
+.comboList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.comboItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  transition: all var(--transition-fast);
+}
+
+.comboItem:hover {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary-light);
+}
+
+.comboInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.comboText {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+}
+
+/* ── Responsive ── */
+@media (max-width: 767px) {
+  .keywordGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .comboItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .heatmapRow {
+    grid-template-columns: 80px repeat(5, 1fr);
+  }
+
+  .heatmapLabel {
+    font-size: var(--text-xs);
+  }
+
+  .naverTable {
+    font-size: var(--text-xs);
+  }
+
+  .naverTable th,
+  .naverTable td {
+    padding: var(--space-2);
+  }
+}

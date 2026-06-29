@@ -1,0 +1,110 @@
+/* ============================================
+   Card.module.css
+   CreatorFlow 카드 컴포넌트 스타일
+   - 글래스모피즘 기반
+   - variant: default, elevated, interactive
+   - 호버 시 보더 발광 효과
+   ============================================ */
+
+.card {
+  position: relative;
+  background: var(--glass);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition:
+    transform var(--transition-normal) ease,
+    box-shadow var(--transition-normal) ease,
+    border-color var(--transition-normal) ease;
+}
+
+/* ── Variant: default ── */
+.default {
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Variant: elevated ── */
+.elevated {
+  box-shadow: var(--shadow-md);
+}
+
+/* ── Variant: interactive - 호버 시 lift 효과 ── */
+.interactive {
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+.interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--accent-primary);
+}
+
+/* 모든 카드 호버 시 보더 glow */
+.card:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+/* ── 패딩 옵션 ── */
+.paddingNone {
+  /* padding 없음 */
+}
+
+.paddingSm {
+  padding: 12px;
+}
+
+.paddingMd {
+  padding: 20px;
+}
+
+.paddingLg {
+  padding: 28px;
+}
+
+/* ── Header ── */
+.header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Inter', 'Pretendard', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+/* 패딩이 none일 때도 header는 고유 패딩 유지 */
+.paddingNone .header {
+  padding: 16px 20px;
+}
+
+/* header가 있는 카드의 body에서 상단 패딩 보정 */
+.body {
+  /* body는 card의 padding을 그대로 상속 */
+}
+
+/* ── Footer ── */
+.footer {
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* ── 반응형 ── */
+@media (max-width: 767px) {
+  .paddingLg {
+    padding: 20px;
+  }
+
+  .header {
+    padding: 12px 16px;
+  }
+
+  .footer {
+    padding: 12px 16px;
+  }
+}
