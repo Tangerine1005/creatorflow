@@ -53,15 +53,26 @@ ${referenceUrl ? `- 참고 자료: ${referenceUrl}` : ''}
   "direction": "[영상 연출/화면 지시사항]"
 }`;
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text().replace(/```json/g, '').replace(/```/g, '').trim();
-    return JSON.parse(text);
+    let retries = 3;
+    let delayMs = 1000;
+    while (retries > 0) {
+      try {
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = response.text().replace(/```json/g, '').replace(/```/g, '').trim();
+        return JSON.parse(text);
+      } catch (error) {
+        if (error.status === 503 && retries > 1) {
+          retries--;
+          await new Promise(res => setTimeout(res, delayMs));
+          delayMs *= 2; // Exponential backoff
+        } else {
+          throw error;
+        }
+      }
+    }
   },
 
-  /**
-   * 메타데이터 생성 (제목, 설명, 해시태그)
-   */
   async generateMeta({ topic, script, category }) {
     const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
     const prompt = `당신은 유튜브 SEO 전문가입니다.
@@ -81,10 +92,24 @@ ${referenceUrl ? `- 참고 자료: ${referenceUrl}` : ''}
   "hashtags": ["#키워드1", "#키워드2", "#키워드3"]
 }`;
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text().replace(/```json/g, '').replace(/```/g, '').trim();
-    return JSON.parse(text);
+    let retries = 3;
+    let delayMs = 1000;
+    while (retries > 0) {
+      try {
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = response.text().replace(/```json/g, '').replace(/```/g, '').trim();
+        return JSON.parse(text);
+      } catch (error) {
+        if (error.status === 503 && retries > 1) {
+          retries--;
+          await new Promise(res => setTimeout(res, delayMs));
+          delayMs *= 2;
+        } else {
+          throw error;
+        }
+      }
+    }
   },
 
   /**
@@ -105,15 +130,28 @@ ${referenceUrl ? `- 참고 자료: ${referenceUrl}` : ''}
       "style": "스타일 이름 (예: 일러스트/시네마틱 등)",
       "prompt": "AI 이미지 생성기(Midjourney/DALL-E 등)에 입력할 영문 프롬프트 상세 내용",
       "tip": "디자인 팁 1줄"
-    },
-    ... (총 3개)
+    }
   ]
 }`;
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text().replace(/```json/g, '').replace(/```/g, '').trim();
-    return JSON.parse(text);
+    let retries = 3;
+    let delayMs = 1000;
+    while (retries > 0) {
+      try {
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = response.text().replace(/```json/g, '').replace(/```/g, '').trim();
+        return JSON.parse(text);
+      } catch (error) {
+        if (error.status === 503 && retries > 1) {
+          retries--;
+          await new Promise(res => setTimeout(res, delayMs));
+          delayMs *= 2;
+        } else {
+          throw error;
+        }
+      }
+    }
   },
 };
 
