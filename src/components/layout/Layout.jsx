@@ -3,8 +3,8 @@
    Sidebar + Header + main content + MobileTabBar
    ============================================ */
 
-import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import MobileTabBar from './MobileTabBar';
@@ -15,6 +15,17 @@ import styles from './Layout.module.css';
 export default function Layout() {
   /* 사이드바 접기/펼치기 상태 */
   const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    import('../../services/auth').then(({ default: authService }) => {
+      authService.getSession().then(({ session }) => {
+        if (!session && import.meta.env.VITE_DEV_MODE === 'false') {
+          navigate('/login', { replace: true });
+        }
+      });
+    });
+  }, [navigate]);
 
   const handleToggleSidebar = () => {
     setCollapsed((prev) => !prev);

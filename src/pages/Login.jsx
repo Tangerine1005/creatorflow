@@ -23,10 +23,12 @@ import {
 } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
+import { useToast } from '../components/ui/Toast';
 import styles from './Login.module.css';
 
 export default function Login() {
   const navigate = useNavigate();
+  const toast = useToast();
 
   /* ── 상태 ── */
   const [isLogin, setIsLogin] = useState(true);         // true: 로그인, false: 회원가입
@@ -39,10 +41,34 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
   /* ── 핸들러 ── */
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 개발 모드: 유효성 검사 없이 바로 이동
-    navigate('/setup');
+    if (!email || !password || (!isLogin && !name)) {
+      toast.error('입력 오류', '모든 필드를 입력해주세요.');
+      return;
+    }
+    if (!isLogin && !agreed) {
+      toast.error('동의 필요', '이용약관 및 개인정보 처리방침에 동의해주세요.');
+      return;
+    }
+
+    try {
+      const { default: authService } = await import('../services/auth');
+      
+      if (isLogin) {
+        const { error } = await authService.signIn(email, password);
+        if (error) throw error;
+        toast.success('로그인 성공!', 'CreatorFlow에 오신 것을 환영합니다.');
+      } else {
+        const { error } = await authService.signUp(email, password, name);
+        if (error) throw error;
+        toast.success('회원가입 성공!', '가입이 완료되었습니다. 자동으로 로그인됩니다.');
+      }
+      
+      navigate('/');
+    } catch (err) {
+      toast.error(isLogin ? '로그인 실패' : '회원가입 실패', err.message || '다시 시도해주세요.');
+    }
   };
 
   const toggleMode = () => {

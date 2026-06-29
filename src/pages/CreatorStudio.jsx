@@ -991,7 +991,11 @@ export default function CreatorStudio() {
                   const { contentService } = await import('../services/db');
                   const { default: authService } = await import('../services/auth');
                   const { user } = await authService.getUser();
-                  const teamId = user?.id || 'team-1'; // TODO: 팀 시스템 연동 시 수정
+                  const teamId = user?.id;
+                  
+                  if (!teamId) {
+                    throw new Error('로그인이 필요합니다.');
+                  }
 
                   const newContent = {
                     team_id: teamId,
@@ -999,8 +1003,6 @@ export default function CreatorStudio() {
                     category,
                     tone,
                     status: 'draft', // 기본값 초안
-                    // titles 배열 형태 저장 안되면 첫 번째 것만 저장 또는 JSON 형태로 저장
-                    // schema가 어떻게 되어있는지 확인이 안되지만, mockData.js를 보면 topic, category, status 등을 가지고 있음
                   };
                   
                   // 스크립트 등 상세 내용을 DB에 다 넣으려면 DB 스키마에 맞게 맞춰야함.

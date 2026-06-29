@@ -63,7 +63,11 @@ export default function Library() {
     import('../services/db').then(({ contentService }) => {
       import('../services/auth').then(({ default: authService }) => {
         authService.getUser().then(({ user }) => {
-          const teamId = user?.id || 'team-1'; // 기본값
+          const teamId = user?.id;
+          if (!teamId) {
+            setLoading(false);
+            return;
+          }
           contentService.list(teamId).then(({ data, error }) => {
             if (!error && data) {
               setContents(data);
