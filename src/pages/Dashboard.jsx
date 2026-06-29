@@ -9,7 +9,7 @@
  * - 최근 콘텐츠 목록 + 팀 활동 로그
  */
 
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import {
   AreaChart,
@@ -117,6 +117,17 @@ export default function Dashboard() {
   /* 채널 통계 */
   const { channelStats, recentPerformance } = mockAnalytics;
 
+  /* 실제 로그인 유저 정보 */
+  const [user, setUser] = useState(null);
+  
+  useEffect(() => {
+    import('../services/auth').then(({ default: authService }) => {
+      authService.getUser().then(({ user }) => {
+        setUser(user);
+      });
+    });
+  }, []);
+
   return (
     <div className={styles.page}>
       {/* ────────────────────────────────
@@ -126,7 +137,7 @@ export default function Dashboard() {
         <div className={styles.greetingArea}>
           <h1 className={styles.greeting}>
             <span className={styles.greetingEmoji}>{greeting.emoji}</span>
-            {greeting.text}, 김크리에이터님
+            {greeting.text}, {user?.user_metadata?.display_name || user?.email?.split('@')[0] || '크리에이터'}님
           </h1>
           <p className={styles.subGreeting}>
             오늘도 멋진 콘텐츠를 만들어볼까요?

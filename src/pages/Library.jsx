@@ -4,7 +4,7 @@
    상세 모달, 편집/삭제/복제 인터랙션
    ============================================ */
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Search, Grid3X3, List, Edit, Trash2, Copy, Eye, Plus,
@@ -56,7 +56,26 @@ export default function Library() {
   const toast = useToast();
 
   /* ── 로컬 콘텐츠 상태 (삭제/복제 반영) ── */
-  const [contents, setContents] = useState(mockContents);
+  const [contents, setContents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    import('../services/db').then(({ contentService }) => {
+      import('../services/auth').then(({ default: authService }) => {
+        authService.getUser().then(({ user }) => {
+          const teamId = user?.id || 'team-1'; // 기본값
+          contentService.list(teamId).then(({ data, error }) => {
+            if (!error && data) {
+              setContents(data);
+            } else {
+              console.error(error);
+            }
+            setLoading(false);
+          });
+        });
+      });
+    });
+  }, []);
 
   /* ── 뷰 모드 ── */
   const [viewMode, setViewMode] = useState('grid');
@@ -134,32 +153,47 @@ export default function Library() {
     setDeleteTarget(content);
   }, []);
 
-  const confirmDelete = useCallback(() => {
+  const confirmDelete = useCallback(async () => {
     if (!deleteTarget) return;
-    setContents(prev => prev.filter(c => c.id !== deleteTarget.id));
-    toast.success('삭제 완료', `"${getTitle(deleteTarget)}" 콘텐츠가 삭제되었습니다.`);
-    setDeleteTarget(null);
-    setDetailModal(null);
+    
+    try {
+      const { contentService } = await import('../services/db');
+      await contentService.delete(deleteTarget.id);
+      
+      setContents(prev => prev.filter(c => c.id !== deleteTarget.id));
+      toast.success('삭제 완료', `"${getTitle(deleteTarget)}" 콘텐츠가 삭제되었습니다.`);
+      setDeleteTarget(null);
+      setDetailModal(null);
+    } catch (e) {
+      toast.error('삭제 실패', e.message);
+    }
   }, [deleteTarget, toast]);
 
-  const handleDuplicate = useCallback((content) => {
-    const newContent = {
-      ...content,
-      id: generateId(),
-      status: 'draft',
-      titles: content.titles?.length
-        ? [content.titles[content.selectedTitleIndex] + ' (복사본)', ...content.titles.slice(1)]
-        : [],
-      topic: content.topic + ' (복사본)',
-      selectedTitleIndex: 0,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      publishedAt: null,
-      scheduledAt: null,
-      youtubeVideoId: null,
-    };
-    setContents(prev => [newContent, ...prev]);
-    toast.success('복제 완료', `"${getTitle(content)}" 콘텐츠가 복제되었습니다.`);
+  const handleDuplicate = useCallback(async (content) => {
+    try {
+      const { contentService } = await import('../services/db');
+      const newContentData = {
+        team_id: content.team_id,
+        status: 'draft',
+        titles: content.titles?.length
+          ? [content.titles[content.selectedTitleIndex] + ' (복사본)', ...content.titles.slice(1)]
+          : [],
+        topic: content.topic + ' (복사본)',
+        category: content.category,
+        tone: content.tone,
+        selectedTitleIndex: 0,
+        // DB 테이블 컬럼에 맞는 필드만 복사해야 함
+      };
+      
+      const { data, error } = await contentService.create(newContentData);
+      
+      if (error) throw error;
+      
+      setContents(prev => [data, ...prev]);
+      toast.success('복제 완료', `"${getTitle(content)}" 콘텐츠가 복제되었습니다.`);
+    } catch (e) {
+      toast.error('복제 실패', e.message);
+    }
   }, [toast]);
 
   /* ── 카테고리 필터 옵션 ── */

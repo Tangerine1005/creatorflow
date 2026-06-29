@@ -3,7 +3,7 @@
    API 키 관리, 테마, 개발 모드, 프로필, 데이터 내보내기
    ============================================ */
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import {
   Settings as SettingsIcon, Key, Palette, Globe, Bell, Code,
   Eye, EyeOff, Save, Shield, RotateCcw, ChevronRight,
@@ -39,9 +39,20 @@ export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
 
   /* ── 프로필 상태 ── */
-  const [profileName, setProfileName] = useState('김크리에이터');
+  const [profileName, setProfileName] = useState('크리에이터');
   const [profileEmail, setProfileEmail] = useState('creator@example.com');
   const [profileSaved, setProfileSaved] = useState(false);
+
+  useEffect(() => {
+    import('../services/auth').then(({ default: authService }) => {
+      authService.getUser().then(({ user }) => {
+        if (user) {
+          setProfileName(user?.user_metadata?.display_name || user?.email?.split('@')[0] || '크리에이터');
+          setProfileEmail(user?.email || 'creator@example.com');
+        }
+      });
+    });
+  }, []);
 
   /* ── API 테스트 상태 ── */
   const [testingGemini, setTestingGemini] = useState(false);

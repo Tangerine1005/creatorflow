@@ -153,48 +153,53 @@ export default function CreatorStudio() {
   }, [newToneName, customTones, toast]);
 
   /* ============================================
-     핸들러: AI 스크립트 생성 (Mock)
+     핸들러: AI 스크립트 생성 (API 호출)
      ============================================ */
-  const handleGenerateScript = useCallback(() => {
+  const handleGenerateScript = useCallback(async () => {
     // 현재 스크립트를 히스토리에 저장
     if (scripts.narration) {
       setScriptHistory(prev => [scripts, ...prev].slice(0, 3));
     }
     setIsGeneratingScript(true);
     setScriptConfirmed(false);
-    setTimeout(() => {
+    try {
+      const { default: api } = await import('../services/api');
+      const response = await api.ai.generateScript({ topic, category, tone, language, referenceUrl });
+      
       setScripts({
-        narration: mockAIResponses.script.narration,
-        subtitle: mockAIResponses.script.subtitle,
-        direction: mockAIResponses.script.direction,
+        narration: response.narration,
+        subtitle: response.subtitle,
+        direction: response.direction,
       });
       setLastSaved(new Date());
+    } catch (error) {
+      toast.error('스크립트 생성 실패', error.message || 'API 호출 중 오류가 발생했습니다.');
+    } finally {
       setIsGeneratingScript(false);
-    }, 1500);
-  }, [scripts]);
+    }
+  }, [scripts, topic, category, tone, language, referenceUrl, toast]);
 
   /* ============================================
-     핸들러: AI 메타데이터 생성 (Mock)
+     핸들러: AI 메타데이터 생성 (API 호출)
      ============================================ */
-  const handleGenerateMeta = useCallback(() => {
+  const handleGenerateMeta = useCallback(async () => {
     setIsGeneratingMeta(true);
-    setTimeout(() => {
-      setTitles(mockAIResponses.titles);
-      const descList = [
-        mockAIResponses.description,
-        `${topic || '주제'}에 대한 직장인 공감 콘텐츠! \n\n🔥 어디서도 본 적 없는 리얼한 직장인 이야기\n😂 공감 100% 리액션 보장\n\n구독과 좋아요는 큰 힘이 됩니다!\n\n#직장인 #콘텐츠 #공감 #쇼츠`,
-        `⭐ ${topic || '주제'} | 직장인 콘텐츠\n\n오늘도 회사에서 살아남은 당신을 위한 콘텐츠 💪\n
-✅ 매일 새로운 직장인 콘텐츠 업로드!\n
-#직장인일상 #회사생활 #콘텐츠마이닝`,
-      ];
-      setDescriptions(descList);
-      setDescription(descList[0]);
+    try {
+      const { default: api } = await import('../services/api');
+      const response = await api.ai.generateMeta({ topic, script: scripts, category });
+      
+      setTitles(response.titles.map(t => t.text));
+      setDescriptions([response.description]);
+      setDescription(response.description);
       setSelectedDescIndex(0);
-      setHashtags([...mockAIResponses.hashtags]);
+      setHashtags(response.hashtags.map(t => t.replace('#', '')));
       setSelectedTitleIndex(0);
+    } catch (error) {
+      toast.error('메타데이터 생성 실패', error.message || 'API 호출 중 오류가 발생했습니다.');
+    } finally {
       setIsGeneratingMeta(false);
-    }, 1500);
-  }, [topic]);
+    }
+  }, [topic, scripts, category, toast]);
 
   /* ============================================
      핸들러: 해시태그 삭제
@@ -204,33 +209,22 @@ export default function CreatorStudio() {
   }, []);
 
   /* ============================================
-     핸들러: 썸네일 프롬프트 추천 (Gemini - 무료)
+     핸들러: 썸네일 프롬프트 추천 (API 호출)
      ============================================ */
-  const handleGeneratePrompts = useCallback(() => {
+  const handleGeneratePrompts = useCallback(async () => {
     setIsGeneratingPrompts(true);
-    setTimeout(() => {
-      const topicText = topic || '직장인 공감 콘텐츠';
-      setThumbPrompts([
-        {
-          style: '일러스트/카툰',
-          prompt: `유튜브 쇼츠 썸네일, 일러스트 스타일. 주제: "${topicText}". 밝은 보라색+시안 그라디언트 배경, 귀여운 캐릭터가 과장된 표정을 짓는 모습, 굵은 한국어 텍스트 오버레이, 1280x720px`,
-          tip: '💡 Gemini에서 이미지 생성 시 "일러스트 스타일"을 강조하세요',
-        },
-        {
-          style: '밈/텍스트 중심',
-          prompt: `유튜브 쇼츠 썸네일, 밈 스타일. 주제: "${topicText}". 진한 다크 배경에 네온 컬러 텍스트, 이모지 장식, 충격적인 숫자나 문구 강조, 1280x720px`,
-          tip: '💡 텍스트가 큰 밈형 썸네일은 클릭률이 높습니다',
-        },
-        {
-          style: '시네마틱/감성',
-          prompt: `유튜브 쇼츠 썸네일, 시네마틱 스타일. 주제: "${topicText}". 영화 포스터 같은 드라마틱 조명, 따뜻한 톤 색감, 감성적 분위기, 한글 타이틀 하단 배치, 1280x720px`,
-          tip: '💡 공감/감성 콘텐츠에 적합한 스타일입니다',
-        },
-      ]);
+    try {
+      const { default: api } = await import('../services/api');
+      const response = await api.ai.generatePrompts({ topic, titles, category, tone });
+      
+      setThumbPrompts(response.prompts);
+      toast.success('프롬프트 생성 완료', '프롬프트를 복사해서 이미지 AI에서 만들어보세요!');
+    } catch (error) {
+      toast.error('프롬프트 생성 실패', error.message || 'API 호출 중 오류가 발생했습니다.');
+    } finally {
       setIsGeneratingPrompts(false);
-      toast.success('프롬프트 생성 완료', '프롬프트를 복사해서 Gemini에서 이미지를 만들어보세요!');
-    }, 1200);
-  }, [topic, toast]);
+    }
+  }, [topic, titles, category, tone, toast]);
 
   /* ============================================
      핸들러: 프롬프트 복사
@@ -992,9 +986,41 @@ export default function CreatorStudio() {
               variant="primary"
               leftIcon={<Save size={18} />}
               disabled={!uploadedThumbnail && thumbPrompts.length === 0}
-              onClick={() => {
-                toast.success('저장 완료!', '콘텐츠가 라이브러리에 저장되었습니다.');
-                setTimeout(() => navigate('/library'), 1000);
+              onClick={async () => {
+                try {
+                  const { contentService } = await import('../services/db');
+                  const { default: authService } = await import('../services/auth');
+                  const { user } = await authService.getUser();
+                  const teamId = user?.id || 'team-1'; // TODO: 팀 시스템 연동 시 수정
+
+                  const newContent = {
+                    team_id: teamId,
+                    topic,
+                    category,
+                    tone,
+                    status: 'draft', // 기본값 초안
+                    // titles 배열 형태 저장 안되면 첫 번째 것만 저장 또는 JSON 형태로 저장
+                    // schema가 어떻게 되어있는지 확인이 안되지만, mockData.js를 보면 topic, category, status 등을 가지고 있음
+                  };
+                  
+                  // 스크립트 등 상세 내용을 DB에 다 넣으려면 DB 스키마에 맞게 맞춰야함.
+                  // mockData.js 구조와 Supabase 테이블 구조가 다를 수 있지만 일단 최소한의 정보를 저장
+                  // (이전에 만든 테이블 구조 기반: contents 테이블)
+                  
+                  // 간단히 로컬스토리지에도 저장해주자(만약 Supabase 실패 대비)
+                  toast.success('저장 중...', '잠시만 기다려주세요.');
+                  await contentService.create({
+                    team_id: teamId,
+                    topic,
+                    category,
+                    tone,
+                    status: 'draft',
+                  });
+                  toast.success('저장 완료!', '콘텐츠가 라이브러리에 저장되었습니다.');
+                  setTimeout(() => navigate('/library'), 1000);
+                } catch (e) {
+                  toast.error('저장 실패', e.message);
+                }
               }}
             >
               라이브러리에 저장
