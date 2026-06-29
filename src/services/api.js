@@ -36,7 +36,7 @@ export const aiService = {
    * 스크립트 생성
    */
   async generateScript({ topic, category, tone, language, referenceUrl }) {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
     const prompt = `당신은 전문 유튜브 쇼츠 기획자입니다.
 다음 조건에 맞춰서 매력적인 쇼츠 스크립트를 작성해주세요.
 
@@ -63,7 +63,7 @@ ${referenceUrl ? `- 참고 자료: ${referenceUrl}` : ''}
    * 메타데이터 생성 (제목, 설명, 해시태그)
    */
   async generateMeta({ topic, script, category }) {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
     const prompt = `당신은 유튜브 SEO 전문가입니다.
 다음 스크립트를 바탕으로 유튜브 메타데이터를 작성해주세요.
 
@@ -91,7 +91,7 @@ ${referenceUrl ? `- 참고 자료: ${referenceUrl}` : ''}
    * 썸네일 프롬프트 추천 (무료 - Gemini Flash)
    */
   async generatePrompts({ topic, titles, category, tone }) {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
     const prompt = `당신은 썸네일 디자이너이자 AI 프롬프트 엔지니어입니다.
 다음 주제로 유튜브 쇼츠 썸네일을 만들기 위한 AI 이미지 생성 프롬프트를 3가지 스타일로 추천해주세요.
 
