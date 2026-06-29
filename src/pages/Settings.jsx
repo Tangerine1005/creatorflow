@@ -16,7 +16,6 @@ import Input from '../components/ui/Input';
 import Badge from '../components/ui/Badge';
 import { useToast } from '../components/ui/Toast';
 import useSettingsStore from '../stores/settingsStore';
-import { mockContents } from '../mocks/mockData';
 import styles from './Settings.module.css';
 
 const SECTIONS = [
@@ -125,10 +124,27 @@ export default function SettingsPage() {
     toast.success('온보딩 가이드가 초기화되었습니다.', '다음 페이지 이동 시 투어가 시작됩니다.');
   };
 
+  const [contents, setContents] = useState([]);
+  
+  useEffect(() => {
+    import('../services/auth').then(({ default: authService }) => {
+      authService.getUser().then(({ user }) => {
+        if (!user) return;
+        import('../services/db').then(({ contentService }) => {
+          contentService.list(user.id).then(({ data, error }) => {
+            if (!error && data) {
+              setContents(data);
+            }
+          });
+        });
+      });
+    });
+  }, []);
+
   /* ── 데이터 내보내기: JSON ── */
   const handleExportJSON = () => {
     try {
-      const json = JSON.stringify(mockContents, null, 2);
+      const json = JSON.stringify(contents, null, 2);
       const blob = new Blob([json], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -138,7 +154,7 @@ export default function SettingsPage() {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      toast.success('📦 JSON 내보내기 완료', `${mockContents.length}개 콘텐츠가 다운로드되었습니다.`);
+      toast.success('📦 JSON 내보내기 완료', `${contents.length}개 콘텐츠가 다운로드되었습니다.`);
     } catch (err) {
       toast.error('내보내기 실패', err.message);
     }
@@ -147,10 +163,10 @@ export default function SettingsPage() {
   /* ── 데이터 내보내기: CSV ── */
   const handleExportCSV = () => {
     try {
-      const headers = ['id', 'status', 'category', 'tone', 'topic', 'createdAt', 'updatedAt'];
+      const headers = ['id', 'status', 'category', 'tone', 'topic', 'created_at'];
       const csvRows = [
         headers.join(','),
-        ...mockContents.map(c =>
+        ...contents.map(c =>
           headers.map(h => {
             const val = c[h] ?? '';
             // CSV에서 쉼표, 따옴표, 줄바꿈 이스케이프
@@ -169,7 +185,7 @@ export default function SettingsPage() {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      toast.success('📊 CSV 내보내기 완료', `${mockContents.length}개 콘텐츠가 다운로드되었습니다.`);
+      toast.success('📊 CSV 내보내기 완료', `${contents.length}개 콘텐츠가 다운로드되었습니다.`);
     } catch (err) {
       toast.error('내보내기 실패', err.message);
     }
@@ -478,24 +494,24 @@ export default function SettingsPage() {
                 데이터 내보내기
               </h3>
               <p className={styles.sectionDesc}>
-                전체 콘텐츠 데이터를 다운로드합니다. 현재 {mockContents.length}개의 콘텐츠가 있습니다.
+                전체 콘텐츠 데이터를 다운로드합니다. 현재 {contents.length}개의 콘텐츠가 있습니다.
               </p>
 
               <Card className={styles.exportCard}>
                 <div className={styles.exportInfo}>
                   <div className={styles.exportStat}>
-                    <span className={styles.exportStatValue}>{mockContents.length}</span>
+                    <span className={styles.exportStatValue}>{contents.length}</span>
                     <span className={styles.exportStatLabel}>전체 콘텐츠</span>
                   </div>
                   <div className={styles.exportStat}>
                     <span className={styles.exportStatValue}>
-                      {mockContents.filter(c => c.status === 'published').length}
+                      {contents.filter(c => c.status === 'published').length}
                     </span>
                     <span className={styles.exportStatLabel}>발행됨</span>
                   </div>
                   <div className={styles.exportStat}>
                     <span className={styles.exportStatValue}>
-                      {mockContents.filter(c => c.status === 'draft').length}
+                      {contents.filter(c => c.status === 'draft').length}
                     </span>
                     <span className={styles.exportStatLabel}>초안</span>
                   </div>

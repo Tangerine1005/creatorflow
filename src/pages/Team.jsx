@@ -3,7 +3,7 @@
    역할 변경, 팀원 제거, 초대 코드, 활동 로그, 팀 정보
    ============================================ */
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   Users, Crown, Edit3, Eye, UserPlus, Copy, Shield, Trash2,
   Clock, RefreshCw, Activity, Calendar, ChevronDown, ChevronUp
@@ -54,6 +54,26 @@ export default function Team() {
 
   /* ── 팀원 상태 ── */
   const [members, setMembers] = useState(mockTeamMembers);
+
+  useEffect(() => {
+    import('../services/auth').then(({ default: authService }) => {
+      authService.getUser().then(({ user }) => {
+        if (user) {
+          setMembers((prev) => {
+            const newMembers = [...prev];
+            if (newMembers.length > 0) {
+              newMembers[0] = {
+                ...newMembers[0],
+                displayName: user.user_metadata?.display_name || '유저',
+                email: user.email || 'user@example.com'
+              };
+            }
+            return newMembers;
+          });
+        }
+      });
+    });
+  }, []);
 
   /* ── 초대 코드 ── */
   const [inviteCode, setInviteCode] = useState(generateInviteCode());

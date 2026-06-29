@@ -76,6 +76,18 @@ export default function Header({ onMenuToggle }) {
   const profileRef = useRef(null);
   const searchRef = useRef(null);
 
+  const [currentUser, setCurrentUser] = useState(null);
+  
+  useEffect(() => {
+    import('../../services/auth').then(({ default: authService }) => {
+      authService.getUser().then(({ user }) => {
+        if (user) {
+          setCurrentUser(user);
+        }
+      });
+    });
+  }, []);
+
   /* ── 상호 배타적 드롭다운 열기 ── */
   const toggleNotifications = () => {
     setShowNotifications((prev) => !prev);
@@ -147,6 +159,15 @@ export default function Header({ onMenuToggle }) {
     setShowProfile(false);
     navigate(path);
   };
+
+  const handleLogout = async () => {
+    const { default: authService } = await import('../../services/auth');
+    await authService.signOut();
+    navigate('/login', { replace: true });
+  };
+
+  const displayName = currentUser?.user_metadata?.display_name || '유저';
+  const initialChar = displayName.charAt(0);
 
   return (
     <header className={styles.header}>
@@ -300,7 +321,7 @@ export default function Header({ onMenuToggle }) {
             aria-label="프로필"
             onClick={toggleProfile}
           >
-            <span className={styles.avatarText}>김</span>
+            <span className={styles.avatarText}>{initialChar}</span>
           </button>
 
           {showProfile && (
@@ -308,15 +329,15 @@ export default function Header({ onMenuToggle }) {
               {/* 유저 정보 */}
               <div className={styles.profileHeader}>
                 <div className={styles.profileAvatar}>
-                  <span>김</span>
+                  <span>{initialChar}</span>
                 </div>
                 <div className={styles.profileInfo}>
-                  <span className={styles.profileName}>김크리에이터</span>
+                  <span className={styles.profileName}>{displayName}</span>
                   <span className={styles.profileEmail}>
-                    creator@example.com
+                    {currentUser?.email || ''}
                   </span>
                 </div>
-                <span className={styles.profileBadge}>관리자</span>
+                <span className={styles.profileBadge}>유저</span>
               </div>
 
               <div className={styles.dropdownDivider} />
@@ -348,7 +369,7 @@ export default function Header({ onMenuToggle }) {
               {/* 로그아웃 */}
               <button
                 className={`${styles.profileMenuItem} ${styles.logoutBtn}`}
-                onClick={() => handleProfileNav('/login')}
+                onClick={handleLogout}
               >
                 <LogOut size={16} />
                 로그아웃

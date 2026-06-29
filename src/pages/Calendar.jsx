@@ -2,14 +2,13 @@
    Calendar Page — 콘텐츠 캘린더
    ============================================ */
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   CalendarDays, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import Card from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
-import { mockContents } from '../mocks/mockData';
 import { getMonthDays, formatKST, isSameDayCheck } from '../utils/dateUtils';
 import styles from './Calendar.module.css';
 
@@ -22,11 +21,28 @@ export default function CalendarPage() {
 
   const days = useMemo(() => getMonthDays(year, month), [year, month]);
 
+  const [contents, setContents] = useState([]);
+  
+  useEffect(() => {
+    import('../services/auth').then(({ default: authService }) => {
+      authService.getUser().then(({ user }) => {
+        if (!user) return;
+        import('../services/db').then(({ contentService }) => {
+          contentService.list(user.id).then(({ data, error }) => {
+            if (!error && data) {
+              setContents(data);
+            }
+          });
+        });
+      });
+    });
+  }, []);
+
   // 콘텐츠를 날짜별로 그룹핑
   const contentsByDate = useMemo(() => {
     const map = {};
-    mockContents.forEach(content => {
-      const dateStr = content.scheduledAt || content.publishedAt || content.createdAt;
+    contents.forEach(content => {
+      const dateStr = content.scheduledAt || content.publishedAt || content.created_at || content.createdAt;
       if (dateStr) {
         const key = new Date(dateStr).toDateString();
         if (!map[key]) map[key] = [];
@@ -34,7 +50,7 @@ export default function CalendarPage() {
       }
     });
     return map;
-  }, []);
+  }, [contents]);
 
   const goToPrevMonth = () => {
     setCurrentDate(new Date(year, month - 1, 1));

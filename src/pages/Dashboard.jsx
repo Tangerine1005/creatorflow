@@ -35,7 +35,7 @@ import Card from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
 import { formatCompactNumber, getRelativeTime } from '../utils/helpers';
-import { mockContents, mockAnalytics, mockTrends, mockActivityLogs } from '../mocks/mockData';
+import { mockAnalytics, mockTrends, mockActivityLogs } from '../mocks/mockData';
 
 import styles from './Dashboard.module.css';
 
@@ -93,22 +93,47 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const greeting = getGreeting();
 
+  /* 실제 상태 관리 */
+  const [user, setUser] = useState(null);
+  const [contents, setContents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    import('../services/auth').then(({ default: authService }) => {
+      authService.getUser().then(({ user }) => {
+        if (!user) {
+          setLoading(false);
+          return;
+        }
+        setUser(user);
+        import('../services/db').then(({ contentService }) => {
+          contentService.list(user.id).then(({ data, error }) => {
+            if (!error && data) {
+              setContents(data);
+            }
+            setLoading(false);
+          });
+        });
+      });
+    });
+  }, []);
+
   /* status별 콘텐츠 수 집계 */
   const statusCounts = useMemo(() => {
     const counts = { draft: 0, completed: 0, scheduled: 0, published: 0 };
-    mockContents.forEach((c) => {
+    contents.forEach((c) => {
       if (counts[c.status] !== undefined) counts[c.status]++;
     });
     return counts;
-  }, []);
+  }, [contents]);
 
   /* 최근 콘텐츠 5개 (최신순) */
   const recentContents = useMemo(
     () =>
-      [...mockContents]
-        .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+      [...contents]
+        .sort((a, b) => new Date(b.created_at || b.updatedAt || 0) - new Date(a.created_at || a.updatedAt || 0))
         .slice(0, 5),
-    []
+    [contents]
   );
 
   /* 트렌드 상위 5개 */
@@ -116,17 +141,6 @@ export default function Dashboard() {
 
   /* 채널 통계 */
   const { channelStats, recentPerformance } = mockAnalytics;
-
-  /* 실제 로그인 유저 정보 */
-  const [user, setUser] = useState(null);
-  
-  useEffect(() => {
-    import('../services/auth').then(({ default: authService }) => {
-      authService.getUser().then(({ user }) => {
-        setUser(user);
-      });
-    });
-  }, []);
 
   return (
     <div className={styles.page}>
